@@ -1,5 +1,16 @@
 import * as Device from 'expo-device';
-import { Platform, StyleSheet } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
+import { useState } from 'react';
+import {
+  Alert,
+  Button,
+  FlatList,
+  Image,
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { AnimatedIcon } from '@/components/animated-icon';
@@ -9,53 +20,50 @@ import { ThemedView } from '@/components/themed-view';
 import { WebBadge } from '@/components/web-badge';
 import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
 
-function getDevMenuHint() {
-  if (Platform.OS === 'web') {
-    return <ThemedText type="small">use browser devtools</ThemedText>;
-  }
-  if (Device.isDevice) {
-    return (
-      <ThemedText type="small">
-        shake device or press <ThemedText type="code">m</ThemedText> in terminal
-      </ThemedText>
-    );
-  }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
-  return (
-    <ThemedText type="small">
-      press <ThemedText type="code">{shortcut}</ThemedText>
-    </ThemedText>
-  );
-}
+type Photo = { uri: string };
 
 export default function HomeScreen() {
+  const [photos, setPhotos] = useState<Photo[]>([]);
+
+  const showAlertPrimakara = () => {
+                // Judul    Isinya
+    Alert.alert('Helo', 'Primakara Luar Biasa')
+  }
+
+  // Buka galeri, pilih maksimal 10 foto
+  const pickPhotos = async () => {
+    try {
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ['images'],
+        allowsMultipleSelection: true,
+        selectionLimit: 10,
+        quality: 1,
+      });
+
+      if (result.canceled) return;
+
+      setPhotos(result.assets.map((asset) => ({ uri: asset.uri })));
+    } catch (e) {
+      console.warn('Gagal membuka galeri', e);
+      Alert.alert('Error', 'Gagal membuka galeri.');
+    }
+  };
+
   return (
     <ThemedView style={styles.container}>
       <SafeAreaView style={styles.safeArea}>
-        <ThemedView style={styles.heroSection}>
-          <AnimatedIcon />
-          <ThemedText type="title" style={styles.title}>
-            Welcome to&nbsp;Expo
-          </ThemedText>
-        </ThemedView>
+        <Button title='Klik Alert' onPress={showAlertPrimakara} />
+        <Button title='Pilih 10 Foto' onPress={pickPhotos} />
 
-        <ThemedText type="code" style={styles.code}>
-          get started
-        </ThemedText>
-
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title="Try editing"
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
-          />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
-          <HintRow
-            title="Fresh start"
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-          />
-        </ThemedView>
-
-        {Platform.OS === 'web' && <WebBadge />}
+        <FlatList
+          data={photos}
+          keyExtractor={(item, index) => item.uri + index}
+          numColumns={3}
+          style={styles.list}
+          renderItem={({ item }) => (
+            <Image source={{ uri: item.uri }} style={styles.image} />
+          )}
+        />
       </SafeAreaView>
     </ThemedView>
   );
@@ -74,6 +82,15 @@ const styles = StyleSheet.create({
     gap: Spacing.three,
     paddingBottom: BottomTabInset + Spacing.three,
     maxWidth: MaxContentWidth,
+  },
+  list: {
+    alignSelf: 'stretch',
+  },
+  image: {
+    flex: 1 / 3,
+    aspectRatio: 1,
+    margin: 2,
+    borderRadius: 6,
   },
   heroSection: {
     alignItems: 'center',
