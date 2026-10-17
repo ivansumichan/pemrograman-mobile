@@ -19,6 +19,8 @@ import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { WebBadge } from '@/components/web-badge';
 import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
+import { HelloWorldButton } from '@/components/hello-world-button';
+import ShowInputText from '@/components/show-input-text';
 
 type Photo = { uri: string };
 
@@ -64,6 +66,11 @@ export default function HomeScreen() {
             <Image source={{ uri: item.uri }} style={styles.image} />
           )}
         />
+
+        <HelloWorldButton/>
+
+        <ShowInputText/>
+        
       </SafeAreaView>
     </ThemedView>
   );
