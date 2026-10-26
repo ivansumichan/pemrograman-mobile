@@ -1,26 +1,12 @@
-import * as Device from 'expo-device';
 import * as ImagePicker from 'expo-image-picker';
 import { useState } from 'react';
-import {
-  Alert,
-  Button,
-  FlatList,
-  Image,
-  Platform,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { Alert, Button, FlatList, Image, StyleSheet, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { AnimatedIcon } from '@/components/animated-icon';
-import { HintRow } from '@/components/hint-row';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
 import { HelloWorldButton } from '@/components/hello-world-button';
 import ShowInputText from '@/components/show-input-text';
+import { ThemedView } from '@/components/themed-view';
+import { MaxContentWidth, Spacing } from '@/constants/theme';
 
 type Photo = { uri: string };
 
@@ -28,9 +14,9 @@ export default function HomeScreen() {
   const [photos, setPhotos] = useState<Photo[]>([]);
 
   const showAlertPrimakara = () => {
-                // Judul    Isinya
-    Alert.alert('Helo', 'Primakara Luar Biasa')
-  }
+    // Judul, isi
+    Alert.alert('Helo', 'Primakara Luar Biasa');
+  };
 
   // Buka galeri, pilih maksimal 10 foto
   const pickPhotos = async () => {
@@ -54,8 +40,8 @@ export default function HomeScreen() {
   return (
     <ThemedView style={styles.container}>
       <SafeAreaView style={styles.safeArea}>
-        <Button title='Klik Alert' onPress={showAlertPrimakara} />
-        <Button title='Pilih 10 Foto' onPress={pickPhotos} />
+        <Button title="Klik Alert" onPress={showAlertPrimakara} />
+        <Button title="Pilih 10 Foto" onPress={pickPhotos} />
 
         <FlatList
           data={photos}
@@ -67,10 +53,11 @@ export default function HomeScreen() {
           )}
         />
 
-        <HelloWorldButton/>
+        <HelloWorldButton />
 
-        <ShowInputText/>
-        
+        <ShowInputText />
+
+        <Text>Hai</Text>
       </SafeAreaView>
     </ThemedView>
   );
@@ -87,7 +74,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.four,
     alignItems: 'center',
     gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
+    paddingBottom: Spacing.three,
     maxWidth: MaxContentWidth,
   },
   list: {
@@ -98,25 +85,5 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
     margin: 2,
     borderRadius: 6,
-  },
-  heroSection: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
-  },
-  title: {
-    textAlign: 'center',
-  },
-  code: {
-    textTransform: 'uppercase',
-  },
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
   },
 });
