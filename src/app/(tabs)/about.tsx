@@ -11,12 +11,12 @@ export default function AboutScreen() {
     <ThemedView style={styles.container}>
       <SafeAreaView style={styles.safeArea}>
         <ThemedText type="title" style={styles.title}>
-          😄
+          🙌🙌
         </ThemedText>
         <ThemedText style={styles.text}>
-          Kerjain Ya Guys 😄
+          Welcome to About
         </ThemedText>
-          <Button title='Ke Hello' onPress={() => router.push('/hello')} />
+          <Button title='Hello' onPress={() => router.push('/hello')} />
       </SafeAreaView>
     </ThemedView>
   );

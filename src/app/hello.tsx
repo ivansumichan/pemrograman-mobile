@@ -7,9 +7,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 export default function Hello() {
   return (
     <ThemedView style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <ThemedText type="title">Halaman Detail</ThemedText>
+      <ThemedText type="title">Detail Page</ThemedText>
       <SafeAreaView>
-        <Button title="Ke About" onPress={() => router.push("/(tabs)/about")} />
+        <Button title="About" onPress={() => router.push("/(tabs)/about")} />
       </SafeAreaView>
     </ThemedView>
   );
